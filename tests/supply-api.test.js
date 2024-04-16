@@ -61,10 +61,29 @@ describe('addition of a new user', () => {
         const usersAtStart = await helper.usersInDB()
         const response = await api.post('/api/users')
             .send(helper.validData)
-        //     .expect(201)
-        //     .expect('Content-Type', /application\/json/)
-        // const usersAtEnd = await helper.usersInDB()
-        // expect(usersAtEnd).toHaveLength(usersAtStart.length + 1)
+            .expect(201)
+            .expect('Content-Type', /application\/json/)
+        const usersAtEnd = await helper.usersInDB()
+        expect(usersAtEnd).toHaveLength(usersAtStart.length + 1)
+    })
+
+    test('fails with statuscode 400 when given invalid data ', async () => {
+        const usersAtStart = await helper.usersInDB()
+        const response = await api.post('/api/users')
+            .send(helper.invalidData)
+            .expect(400)
+        const usersAtEnd = await helper.usersInDB()
+        expect(usersAtEnd).toHaveLength(usersAtStart.length)
+    })
+})
+
+describe('deleting a user', () => {
+    test('succeds given a valid id', async() => {
+        const usersAtStart = await helper.usersInDB()
+        const response = await api.delete(`/api/users/${usersAtStart[0].id}`)
+            .expect(204)
+        const usersAtEnd = await helper.usersInDB()
+        expect(usersAtEnd).toHaveLength(usersAtStart.length - 1)
     })
 })
 
