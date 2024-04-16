@@ -21,7 +21,12 @@ const validData = {
     username: "bob_jenkins",
     name: "Bob Jenkins",
     email: "bob@example.com",
-    passwordHash: "mysecretpass"
+    password: "mysecretpass"
+}
+
+const invalidData = {
+    username: "bob_jenkins",
+    password: "mysecretpass"
 }
 
 const usersInDB = async () => {
@@ -45,4 +50,4 @@ const nonExistentId = async () => {
 }
 
 
-module.exports = { users, usersInDB, nonExistentId, validData }
+module.exports = { users, usersInDB, nonExistentId, validData, invalidData }
